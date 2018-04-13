@@ -72,21 +72,6 @@ RUN pecl install msgpack \
 	&& docker-php-ext-enable msgpack yar yac igbinary redis memcached mongodb amqp zookeeper imagick
 
 # 其它扩展
-# Qconf
-RUN curl -fsSL 'https://github.com/Qihoo360/QConf/archive/1.2.1.tar.gz' -o qconf.tar.gz \
-	&& mkdir -p qconf \
-	&& tar -xf qconf.tar.gz -C qconf --strip-components=1 \
-	&& rm qconf.tar.gz \
-	&& cd qconf/ \
-	&& mkdir build && cd build \
-	&& cmake .. && make && make install \
-	&& cd ../driver/php \
-	&& phpize \
-	&& ./configure --with-libqconf-dir=/usr/local/qconf/include --enable-static LDFLAGS=/usr/local/qconf/lib/libqconf.a \
-	&& make && make install \
-	&& cd ../../.. && rm -r qconf \
-	&& docker-php-ext-enable qconf
-
 
 # mss
 RUN curl -fsSL 'https://github.com/microhuang/php-mss/archive/v1.3.tar.gz' -o mss.tar.gz \
